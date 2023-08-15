@@ -16,6 +16,9 @@
 		F41A4B542A879EA600CDD95E /* CreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B532A879EA600CDD95E /* CreditViewController.swift */; };
 		F41A4B562A879ED800CDD95E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F41A4B552A879ED800CDD95E /* .gitignore */; };
 		F41A4B582A879EF500CDD95E /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B572A879EF500CDD95E /* APIKey.swift */; };
+		F41A4B5A2A89102200CDD95E /* TrendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B592A89102200CDD95E /* TrendCollectionViewCell.swift */; };
+		F41A4B5E2A8914E600CDD95E /* CastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B5D2A8914E600CDD95E /* CastTableViewCell.swift */; };
+		F41A4B622A8BA54200CDD95E /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B612A8BA54200CDD95E /* OverviewTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		F41A4B532A879EA600CDD95E /* CreditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditViewController.swift; sourceTree = "<group>"; };
 		F41A4B552A879ED800CDD95E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		F41A4B572A879EF500CDD95E /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		F41A4B592A89102200CDD95E /* TrendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCollectionViewCell.swift; sourceTree = "<group>"; };
+		F41A4B5D2A8914E600CDD95E /* CastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewCell.swift; sourceTree = "<group>"; };
+		F41A4B612A8BA54200CDD95E /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OverviewTableViewCell.swift; path = Media/OverviewTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,18 +68,37 @@
 		F41A4B3E2A87980800CDD95E /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				F41A4B5C2A8914CA00CDD95E /* Cell */,
+				F41A4B5B2A8914BA00CDD95E /* VC */,
 				F41A4B3F2A87980800CDD95E /* AppDelegate.swift */,
 				F41A4B412A87980800CDD95E /* SceneDelegate.swift */,
-				F41A4B432A87980800CDD95E /* TrendViewController.swift */,
 				F41A4B452A87980800CDD95E /* Main.storyboard */,
 				F41A4B552A879ED800CDD95E /* .gitignore */,
 				F41A4B572A879EF500CDD95E /* APIKey.swift */,
-				F41A4B532A879EA600CDD95E /* CreditViewController.swift */,
 				F41A4B482A87980900CDD95E /* Assets.xcassets */,
 				F41A4B4A2A87980900CDD95E /* LaunchScreen.storyboard */,
 				F41A4B4D2A87980900CDD95E /* Info.plist */,
 			);
 			path = Media;
+			sourceTree = "<group>";
+		};
+		F41A4B5B2A8914BA00CDD95E /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				F41A4B432A87980800CDD95E /* TrendViewController.swift */,
+				F41A4B532A879EA600CDD95E /* CreditViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		F41A4B5C2A8914CA00CDD95E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F41A4B612A8BA54200CDD95E /* OverviewTableViewCell.swift */,
+				F41A4B592A89102200CDD95E /* TrendCollectionViewCell.swift */,
+				F41A4B5D2A8914E600CDD95E /* CastTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,8 +173,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F41A4B622A8BA54200CDD95E /* OverviewTableViewCell.swift in Sources */,
 				F41A4B442A87980800CDD95E /* TrendViewController.swift in Sources */,
 				F41A4B402A87980800CDD95E /* AppDelegate.swift in Sources */,
+				F41A4B5E2A8914E600CDD95E /* CastTableViewCell.swift in Sources */,
+				F41A4B5A2A89102200CDD95E /* TrendCollectionViewCell.swift in Sources */,
 				F41A4B422A87980800CDD95E /* SceneDelegate.swift in Sources */,
 				F41A4B542A879EA600CDD95E /* CreditViewController.swift in Sources */,
 				F41A4B582A879EF500CDD95E /* APIKey.swift in Sources */,

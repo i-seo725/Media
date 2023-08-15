@@ -8,7 +8,8 @@
 import UIKit
 
 class TrendViewController: UIViewController {
-
+    
+    @IBOutlet var movieCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         

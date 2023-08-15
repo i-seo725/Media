@@ -9,6 +9,12 @@ import UIKit
 
 class CreditViewController: UIViewController {
 
+    @IBOutlet var posterImage: UIImageView!
+    @IBOutlet var overviewLabel: UILabel!
+    @IBOutlet var castLabel: UILabel!
+    @IBOutlet var castTableView: UITableView!
+    @IBOutlet var overviewTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
