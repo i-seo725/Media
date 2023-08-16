@@ -22,6 +22,7 @@
 		F41A4B682A8BA69700CDD95E /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = F41A4B672A8BA69700CDD95E /* SwiftyJSON */; };
 		F41A4B6B2A8BA6A000CDD95E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F41A4B6A2A8BA6A000CDD95E /* Alamofire */; };
 		F41A4B6D2A8BB29500CDD95E /* movieStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B6C2A8BB29500CDD95E /* movieStruct.swift */; };
+		F41A4B852A8D04A600CDD95E /* castStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B842A8D04A600CDD95E /* castStruct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,7 +40,8 @@
 		F41A4B592A89102200CDD95E /* TrendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCollectionViewCell.swift; sourceTree = "<group>"; };
 		F41A4B5D2A8914E600CDD95E /* CastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewCell.swift; sourceTree = "<group>"; };
 		F41A4B612A8BA54200CDD95E /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OverviewTableViewCell.swift; path = Media/OverviewTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		F41A4B6C2A8BB29500CDD95E /* movieStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = movieStruct.swift; sourceTree = SOURCE_ROOT; };
+		F41A4B6C2A8BB29500CDD95E /* movieStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = movieStruct.swift; path = Media/struct/movieStruct.swift; sourceTree = SOURCE_ROOT; };
+		F41A4B842A8D04A600CDD95E /* castStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = castStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +76,7 @@
 		F41A4B3E2A87980800CDD95E /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				F41A4B6C2A8BB29500CDD95E /* movieStruct.swift */,
+				F41A4B832A8D047B00CDD95E /* struct */,
 				F41A4B5C2A8914CA00CDD95E /* Cell */,
 				F41A4B5B2A8914BA00CDD95E /* VC */,
 				F41A4B3F2A87980800CDD95E /* AppDelegate.swift */,
@@ -106,6 +108,15 @@
 				F41A4B5D2A8914E600CDD95E /* CastTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		F41A4B832A8D047B00CDD95E /* struct */ = {
+			isa = PBXGroup;
+			children = (
+				F41A4B6C2A8BB29500CDD95E /* movieStruct.swift */,
+				F41A4B842A8D04A600CDD95E /* castStruct.swift */,
+			);
+			path = struct;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +206,7 @@
 				F41A4B5A2A89102200CDD95E /* TrendCollectionViewCell.swift in Sources */,
 				F41A4B422A87980800CDD95E /* SceneDelegate.swift in Sources */,
 				F41A4B542A879EA600CDD95E /* CreditViewController.swift in Sources */,
+				F41A4B852A8D04A600CDD95E /* castStruct.swift in Sources */,
 				F41A4B582A879EF500CDD95E /* APIKey.swift in Sources */,
 				F41A4B6D2A8BB29500CDD95E /* movieStruct.swift in Sources */,
 			);

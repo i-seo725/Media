@@ -200,7 +200,7 @@
         <!--Credit View Controller-->
         <scene sceneID="TtC-an-F0p">
             <objects>
-                <viewController id="fpQ-xk-2qr" customClass="CreditViewController" customModule="Media" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreditViewController" id="fpQ-xk-2qr" customClass="CreditViewController" customModule="Media" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qKf-nB-F0r">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -256,6 +256,9 @@
                                                 <constraint firstItem="Sfg-qU-dIT" firstAttribute="leading" secondItem="TqA-nE-6d7" secondAttribute="leading" constant="8" id="z97-co-oi7"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="BHM-6a-bC8" id="iJH-bq-kBD"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -328,7 +331,7 @@
                     <connections>
                         <outlet property="castLabel" destination="T4w-L8-GcZ" id="GCI-fK-1o3"/>
                         <outlet property="castTableView" destination="2QC-bv-ANY" id="QES-k9-utt"/>
-                        <outlet property="overviewLabel" destination="T4w-L8-GcZ" id="NIZ-Ns-FMb"/>
+                        <outlet property="overviewLabel" destination="2cw-70-yxs" id="FX1-BI-HDt"/>
                         <outlet property="overviewTableView" destination="0IJ-uL-mGm" id="aez-Jp-x54"/>
                         <outlet property="posterImage" destination="8LV-Ho-gMQ" id="kUU-B8-c2p"/>
                     </connections>

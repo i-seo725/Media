@@ -88,12 +88,12 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
                 cell.loadingView.stopAnimating()
             }
         }
-        
-
-        
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        <#code#>
+        guard let vc = storyboard?.instantiateViewController(identifier: "CreditViewController") as? CreditViewController else { return }
+        vc.movieID = list[indexPath.row].id
+        vc.pickedMovie = list[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
