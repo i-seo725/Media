@@ -11,7 +11,10 @@ class CastTableViewCell: UITableViewCell {
 
     static let identifier = "CastTableViewCell"
     
+    @IBOutlet var profileImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var characterLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

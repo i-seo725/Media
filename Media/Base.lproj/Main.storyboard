@@ -257,7 +257,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="characterLabel" destination="NyH-LE-aQ5" id="pCt-N5-fen"/>
                                             <outlet property="nameLabel" destination="BHM-6a-bC8" id="iJH-bq-kBD"/>
+                                            <outlet property="profileImageView" destination="Sfg-qU-dIT" id="NZj-JQ-a6R"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

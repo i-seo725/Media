@@ -15,7 +15,9 @@ class OverviewTableViewCell: UITableViewCell {
     @IBOutlet var expandButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        expandButton.setTitle("", for: .normal)
+        expandButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        contentsLabel.numberOfLines = 4
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

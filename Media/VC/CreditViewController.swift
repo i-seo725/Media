@@ -23,14 +23,16 @@ class CreditViewController: UIViewController {
     var pickedMovie: Movie?
     var movieTitle: String?
     var castList: [Cast] = []
+    var isExpand: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overviewTableView.rowHeight = 300
         connectTableView()
         designView()
         setImage()
         callCast()
-        
+//        overviewTableView.rowHeight = .
     }
     
     func designView() {
@@ -81,7 +83,6 @@ class CreditViewController: UIViewController {
             }
         }
     }
-    
     func setImage() {
         guard let movie = pickedMovie else { return }
         guard let url1 = URL(string: movie.backdropImage) else { return }
@@ -97,59 +98,73 @@ class CreditViewController: UIViewController {
         
         
     }
+    
+    @objc func expandButtonTapped(content: UILabel, icon: UIButton ) {
+        if isExpand == false {
+            content.numberOfLines = 0
+            icon.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            overviewTableView.rowHeight = UITableView.automaticDimension
+            isExpand.toggle()
+        } else {
+            content.numberOfLines = 4
+            icon.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+            isExpand.toggle()
+        }
+    }
 }
 
 extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if tableView == castTableView {
-//            print("1")
-//            return 1
-//        } else if tableView == overviewTableView {
-//            return 1
-//        } else {
-//            return 0
-//        }
         switch tableView {
-        case castTableView:
-//            print("캐스트")
-            return 1
         case overviewTableView:
-//            print("오버뷰")
             return 1
+        case castTableView:
+            return castList.count
         default: return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("실행?1111")
-        guard let overviewCell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier) as? OverviewTableViewCell else { return UITableViewCell()}
-        print("실행?222222")
-//        guard
-            let castCell = tableView.dequeueReusableCell(withIdentifier: CastTableViewCell.identifier) as! CastTableViewCell //else { return UITableViewCell() }
-        print("실행?3333333")
         guard let movie = pickedMovie else { return UITableViewCell() }
         
-        if tableView == overviewTableView {
-            print("실행 되나? 오버뷰테이블뷰")
-            overviewCell.contentsLabel.text = "xx"//movie.overview
-            overviewCell.contentsLabel.numberOfLines = 0
-            return overviewCell
-        } else if tableView == castTableView {
-            castCell.nameLabel.text = "테스트"
-            return castCell
-        } else {
-            return UITableViewCell()
+        switch tableView {
+        case overviewTableView:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier) as? OverviewTableViewCell else { return UITableViewCell()}
+            cell.contentsLabel.text = movie.overview
+            cell.expandButton.addTarget(self, action: #selector(expandButtonTapped), for: .touchUpInside)
+            return cell
+            
+        case castTableView:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CastTableViewCell.identifier) as? CastTableViewCell else { return UITableViewCell() }
+            
+            cell.nameLabel.text = castList[indexPath.row].name
+            cell.characterLabel.text = castList[indexPath.row].charactor
+            
+            guard let url = URL(string: Cast.imageURL+castList[indexPath.row].image) else {
+                cell.profileImageView.backgroundColor = .systemGray4
+                return cell
+            }
+            DispatchQueue.global().async {
+                let data = try! Data(contentsOf: url)
+                DispatchQueue.main.async {
+                    cell.profileImageView.image = UIImage(data: data)
+                }
+            }
+            return cell
+        default: return UITableViewCell()
         }
-        
-//        switch tableView {
-//        case overviewTableView:
+//        if tableView == overviewTableView {
+//            print("실행 되나? 오버뷰테이블뷰")
 //            overviewCell.contentsLabel.text = "xx"//movie.overview
 //            overviewCell.contentsLabel.numberOfLines = 0
 //            return overviewCell
-//        case castTableView:
+//        } else if tableView == castTableView {
+//            castCell.nameLabel.text = "테스트"
 //            return castCell
-//        default: return UITableViewCell()
+//        } else {
+//            return UITableViewCell()
 //        }
+       
     }
     
     
