@@ -163,13 +163,13 @@
                                         <size key="customSize" width="373" height="428"/>
                                         <connections>
                                             <outlet property="backView" destination="4EG-ZM-ctB" id="UL4-ER-45R"/>
-                                            <outlet property="castLabel" destination="YXo-E6-v39" id="UBp-aQ-ydY"/>
                                             <outlet property="dateLabel" destination="dsY-Bg-6Bk" id="zOt-fP-XhQ"/>
                                             <outlet property="detailLabel" destination="vca-kD-BRa" id="Pai-Ar-KnG"/>
                                             <outlet property="genreLabel" destination="tPY-tK-pib" id="ezv-jw-fEu"/>
                                             <outlet property="iconImage" destination="h8D-5D-2DS" id="KOh-hl-LJM"/>
                                             <outlet property="lineView" destination="0KZ-Mc-Uvo" id="FrG-fd-QIy"/>
                                             <outlet property="loadingView" destination="1hN-fY-wsS" id="VkX-Pk-OS2"/>
+                                            <outlet property="overviewLabel" destination="YXo-E6-v39" id="UBp-aQ-ydY"/>
                                             <outlet property="posterImage" destination="dXa-r8-L5o" id="4c6-zh-TOc"/>
                                             <outlet property="rateLabel" destination="vFv-PF-ZKT" id="f78-hY-jfX"/>
                                             <outlet property="scoreLabel" destination="MDO-oj-wTF" id="Va5-Qy-8Ja"/>
@@ -306,6 +306,18 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yzh-s2-pW1">
+                                <rect key="frame" x="20.000000000000007" y="103" width="112.66666666666669" height="149"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Yzh-s2-pW1" secondAttribute="height" multiplier="3:4" constant="1" id="7Gk-gL-lWX"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bk4-ff-KWh">
+                                <rect key="frame" x="20" y="67" width="42" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8Qw-8s-KHc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -318,22 +330,30 @@
                             <constraint firstItem="2cw-70-yxs" firstAttribute="top" secondItem="8LV-Ho-gMQ" secondAttribute="bottom" constant="20" id="J8S-fp-PG8"/>
                             <constraint firstItem="2cw-70-yxs" firstAttribute="leading" secondItem="T4w-L8-GcZ" secondAttribute="leading" id="KVg-jp-KWF"/>
                             <constraint firstItem="2QC-bv-ANY" firstAttribute="top" secondItem="T4w-L8-GcZ" secondAttribute="bottom" constant="16" id="Lb9-dK-2Ae"/>
+                            <constraint firstItem="Yzh-s2-pW1" firstAttribute="height" secondItem="8LV-Ho-gMQ" secondAttribute="height" multiplier="0.7" id="QDg-cv-FwS"/>
                             <constraint firstItem="8Qw-8s-KHc" firstAttribute="bottom" secondItem="2QC-bv-ANY" secondAttribute="bottom" id="Wn2-cf-9n6"/>
+                            <constraint firstItem="2cw-70-yxs" firstAttribute="top" secondItem="Yzh-s2-pW1" secondAttribute="bottom" constant="40" id="YCY-x7-OSU"/>
                             <constraint firstItem="2cw-70-yxs" firstAttribute="leading" secondItem="8Qw-8s-KHc" secondAttribute="leading" constant="20" id="ZED-HG-qrw"/>
                             <constraint firstItem="0IJ-uL-mGm" firstAttribute="leading" secondItem="8Qw-8s-KHc" secondAttribute="leading" constant="14" id="cVU-QG-Gm6"/>
                             <constraint firstItem="8Qw-8s-KHc" firstAttribute="trailing" secondItem="0IJ-uL-mGm" secondAttribute="trailing" id="fg5-Eb-UhK"/>
+                            <constraint firstItem="bk4-ff-KWh" firstAttribute="top" secondItem="8Qw-8s-KHc" secondAttribute="top" constant="8" id="gQF-JL-7ny"/>
                             <constraint firstAttribute="bottom" secondItem="T4w-L8-GcZ" secondAttribute="bottom" constant="338" id="hQd-MX-92E"/>
+                            <constraint firstItem="bk4-ff-KWh" firstAttribute="leading" secondItem="Yzh-s2-pW1" secondAttribute="leading" id="iz0-7i-AVV"/>
                             <constraint firstItem="0IJ-uL-mGm" firstAttribute="top" secondItem="2cw-70-yxs" secondAttribute="bottom" constant="16" id="lKH-hX-mUW"/>
+                            <constraint firstItem="Yzh-s2-pW1" firstAttribute="top" secondItem="bk4-ff-KWh" secondAttribute="bottom" constant="8" id="nua-I1-Bhx"/>
                             <constraint firstItem="8LV-Ho-gMQ" firstAttribute="top" secondItem="8Qw-8s-KHc" secondAttribute="top" id="pOM-M2-WqS"/>
+                            <constraint firstItem="Yzh-s2-pW1" firstAttribute="leading" secondItem="8Qw-8s-KHc" secondAttribute="leading" constant="20" id="whx-gb-PMt"/>
                             <constraint firstItem="8Qw-8s-KHc" firstAttribute="trailing" secondItem="2QC-bv-ANY" secondAttribute="trailing" id="ye6-RJ-weg"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="castLabel" destination="T4w-L8-GcZ" id="GCI-fK-1o3"/>
                         <outlet property="castTableView" destination="2QC-bv-ANY" id="QES-k9-utt"/>
+                        <outlet property="mainPosterImageView" destination="Yzh-s2-pW1" id="mNI-4c-eSu"/>
                         <outlet property="overviewLabel" destination="2cw-70-yxs" id="FX1-BI-HDt"/>
                         <outlet property="overviewTableView" destination="0IJ-uL-mGm" id="aez-Jp-x54"/>
                         <outlet property="posterImage" destination="8LV-Ho-gMQ" id="kUU-B8-c2p"/>
+                        <outlet property="titleLabel" destination="bk4-ff-KWh" id="IGp-mb-3aP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pDT-Sj-tmb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

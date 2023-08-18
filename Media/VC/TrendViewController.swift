@@ -20,6 +20,7 @@ class TrendViewController: UIViewController {
         movieCollectionView.dataSource = self
         callRequest()
         layout()
+        title = "오늘의 트렌드"
     }
 
     func layout() {
@@ -49,7 +50,9 @@ class TrendViewController: UIViewController {
                     let posterImage = Movie.imagePath + i["poster_path"].stringValue
                     let backdropImage = Movie.imagePath + i["backdrop_path"].stringValue
                     let rate = i["vote_average"].doubleValue
-                    let data = Movie(id: id, title: title, release: release, overview: overview, posterImage: posterImage, backdropImage: backdropImage, rate: rate)
+                    let genre = Movie.findGenre(id: i["genre_ids"][0].intValue)
+                    let data = Movie(id: id, title: title, release: release, overview: overview, posterImage: posterImage, backdropImage: backdropImage, rate: rate, genre: genre)
+                    
                     self.list.append(data)
                 }
                 self.movieCollectionView.reloadData()
@@ -76,7 +79,7 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
         cell.dateLabel.text = row.release
         cell.genreLabel.text = "#\(row.genre)"
         cell.scoreLabel.text = "\(row.rate)"
-        cell.castLabel.text = "테스트테스트테스트"
+        cell.overviewLabel.text = row.overview
         
         let url = URL(string: "\(row.backdropImage)")!
         DispatchQueue.global().async {
@@ -94,6 +97,7 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
         guard let vc = storyboard?.instantiateViewController(identifier: "CreditViewController") as? CreditViewController else { return }
         vc.movieID = list[indexPath.row].id
         vc.pickedMovie = list[indexPath.row]
+        vc.movieTitle = list[indexPath.row].title
         navigationController?.pushViewController(vc, animated: true)
     }
 }

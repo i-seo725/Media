@@ -18,8 +18,16 @@ struct Movie {
     let posterImage: String
     let backdropImage: String
     let rate: Double
-    var genre: String = Movie.genreList.randomElement()!.value
+    var genre: String
     
+    static func findGenre(id: Int) -> String {
+        if let result = genreList[id] {
+            return result
+        } else {
+            let randomResult = genreList.randomElement()?.value
+            return "\(randomResult) : 랜덤값"
+        }
+    }
     
     
 }

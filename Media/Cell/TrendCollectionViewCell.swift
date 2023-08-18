@@ -13,7 +13,7 @@ class TrendCollectionViewCell: UICollectionViewCell {
     @IBOutlet var backView: UIView!
     @IBOutlet var posterImage: UIImageView!
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var castLabel: UILabel!
+    @IBOutlet var overviewLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet var iconImage: UIImageView!
     @IBOutlet var lineView: UIView!
@@ -35,8 +35,9 @@ class TrendCollectionViewCell: UICollectionViewCell {
         
         titleLabel.font = .systemFont(ofSize: 16)
         
-        castLabel.font = .systemFont(ofSize: 14)
-        castLabel.textColor = .darkGray
+        overviewLabel.font = .systemFont(ofSize: 14)
+        overviewLabel.textColor = .darkGray
+        overviewLabel.numberOfLines = 1
         
         lineView.backgroundColor = .black
         
