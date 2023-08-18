@@ -9,6 +9,8 @@ import UIKit
 
 class CastTableViewCell: UITableViewCell {
 
+    static let identifier = "CastTableViewCell"
+    
     @IBOutlet var nameLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -26,13 +26,14 @@ class CreditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        callCast()
-        castTableView.dataSource = self
-        castTableView.delegate = self
-        overviewTableView.dataSource = self
-        overviewTableView.delegate = self
-        
+        connectTableView()
+        designView()
         setImage()
+        callCast()
+        
+    }
+    
+    func designView() {
         overviewLabel.text = "OverView"
         overviewLabel.font = .boldSystemFont(ofSize: 14)
         overviewLabel.textColor = .darkGray
@@ -53,6 +54,12 @@ class CreditViewController: UIViewController {
         
         title = "출연/제작"
     }
+    func connectTableView() {
+        castTableView.dataSource = self
+        castTableView.delegate = self
+        overviewTableView.dataSource = self
+        overviewTableView.delegate = self
+    }
     func callCast() {
         guard let id = movieID else { return }
         let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
@@ -69,13 +76,12 @@ class CreditViewController: UIViewController {
                     self.castList.append(Cast(name: name, charactor: character, image: Cast.imageURL+image))
                 }
                 
-                print(self.castList)
-                
             case .failure(let error):
                 print(error)
             }
         }
     }
+    
     func setImage() {
         guard let movie = pickedMovie else { return }
         guard let url1 = URL(string: movie.backdropImage) else { return }
@@ -95,27 +101,36 @@ class CreditViewController: UIViewController {
 
 extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == castTableView {
-            print("1")
-            return 1
-        } else if tableView == overviewTableView {
-            return 1
-        } else {
-            return 0
-        }
-//        switch tableView {
-//        case castTableView: return 1
-//        case overviewTableView: return 1
-//        default: return 1
+//        if tableView == castTableView {
+//            print("1")
+//            return 1
+//        } else if tableView == overviewTableView {
+//            return 1
+//        } else {
+//            return 0
 //        }
+        switch tableView {
+        case castTableView:
+//            print("캐스트")
+            return 1
+        case overviewTableView:
+//            print("오버뷰")
+            return 1
+        default: return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let overviewCell = tableView.dequeueReusableCell(withIdentifier: "OverviewTableViewCell") as? OverviewTableViewCell else { return UITableViewCell()}
-        guard let castCell = tableView.dequeueReusableCell(withIdentifier: "CastTableViewCell") as? CastTableViewCell else { return UITableViewCell() }
+        print("실행?1111")
+        guard let overviewCell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier) as? OverviewTableViewCell else { return UITableViewCell()}
+        print("실행?222222")
+//        guard
+            let castCell = tableView.dequeueReusableCell(withIdentifier: CastTableViewCell.identifier) as! CastTableViewCell //else { return UITableViewCell() }
+        print("실행?3333333")
         guard let movie = pickedMovie else { return UITableViewCell() }
         
         if tableView == overviewTableView {
+            print("실행 되나? 오버뷰테이블뷰")
             overviewCell.contentsLabel.text = "xx"//movie.overview
             overviewCell.contentsLabel.numberOfLines = 0
             return overviewCell

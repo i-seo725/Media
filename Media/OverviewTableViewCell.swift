@@ -9,6 +9,8 @@ import UIKit
 
 class OverviewTableViewCell: UITableViewCell {
 
+    static let identifier = "OverviewTableViewCell"
+    
     @IBOutlet var contentsLabel: UILabel!
     @IBOutlet var expandButton: UIButton!
     override func awakeFromNib() {
