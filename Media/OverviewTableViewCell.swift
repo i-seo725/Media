@@ -12,18 +12,14 @@ class OverviewTableViewCell: UITableViewCell {
     static let identifier = "OverviewTableViewCell"
     
     @IBOutlet var contentsLabel: UILabel!
-    @IBOutlet var expandButton: UIButton!
+//    @IBOutlet var expandButton: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
-        expandButton.setTitle("", for: .normal)
-        expandButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        contentsLabel.numberOfLines = 4
+//        expandButton.setTitle("", for: .normal)
+//        expandButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        contentsLabel.font = .systemFont(ofSize: 14)
+        
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
 
 }

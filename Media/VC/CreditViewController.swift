@@ -27,7 +27,7 @@ class CreditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        overviewTableView.rowHeight = 300
+        overviewTableView.rowHeight = UITableView.automaticDimension
         connectTableView()
         designView()
         setImage()
@@ -132,7 +132,8 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
         case overviewTableView:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier) as? OverviewTableViewCell else { return UITableViewCell()}
             cell.contentsLabel.text = movie.overview
-            cell.expandButton.addTarget(self, action: #selector(expandButtonTapped), for: .touchUpInside)
+            cell.contentsLabel.numberOfLines = 0
+//            cell.expandButton.addTarget(self, action: #selector(expandButtonTapped), for: .touchUpInside)
             return cell
             
         case castTableView:

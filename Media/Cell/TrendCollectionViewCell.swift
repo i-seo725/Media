@@ -61,6 +61,8 @@ class TrendCollectionViewCell: UICollectionViewCell {
         loadingView.isHidden = false
         loadingView.startAnimating()
     }
-    
+    override func prepareForReuse() {
+        posterImage.image = nil
+    }
     
 }
