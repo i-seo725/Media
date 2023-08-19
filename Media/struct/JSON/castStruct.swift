@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Cast {
+struct Casting {
     static let imageURL = "https://image.tmdb.org/t/p/original/"
     let name: String
     let charactor: String

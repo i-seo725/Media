@@ -11,8 +11,8 @@ import SwiftyJSON
 
 
 class TrendViewController: UIViewController {
-    var list: [Movie] = []
-    var code = [28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy", 80: "Crime", 99: "Documentary", 18: "Drama", 10751: "Family", 14: "Fantasy", 36: "History", 27: "Horror", 10402: "Music", 9648: "Mystery", 10749: "Romance", 878: "Science Fiction", 10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western"]
+    var list: Movie = Movie(totalPages: 0, totalResults: 0, page: 0, results: [])
+    
     @IBOutlet var movieCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,31 +36,11 @@ class TrendViewController: UIViewController {
     func callRequest() {
         let url = "https://api.themoviedb.org/3/trending/movie/day?language=ko-KR"
         let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
-        AF.request(url, method: .get, headers: header).validate().responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-//                print("JSON: \(json)")
-                
-                for i in json["results"].arrayValue {
-                    let id = i["id"].intValue
-                    let title = i["title"].stringValue
-                    let release = i["release_date"].stringValue
-                    let overview = i["overview"].stringValue
-                    let posterImage = Movie.imagePath + i["poster_path"].stringValue
-                    let backdropImage = Movie.imagePath + i["backdrop_path"].stringValue
-                    let rate = i["vote_average"].doubleValue
-                    let genre = Movie.findGenre(id: i["genre_ids"][0].intValue)
-                    let data = Movie(id: id, title: title, release: release, overview: overview, posterImage: posterImage, backdropImage: backdropImage, rate: rate, genre: genre)
-                    
-                    self.list.append(data)
-                }
-                self.movieCollectionView.reloadData()
-                
-                
-            case .failure(let error):
-                print(error)
-            }
+        AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Movie.self) { response in
+            
+            guard let value = response.value else { return }
+            self.list = value
+            self.movieCollectionView.reloadData()
         }
     }
 
@@ -68,20 +48,20 @@ class TrendViewController: UIViewController {
 
 extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return list.count
+        return list.results.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendCollectionViewCell.identifier, for: indexPath) as? TrendCollectionViewCell else {
             return UICollectionViewCell() }
         
-        let row = list[indexPath.row]
+        let row = list.results[indexPath.row]
         cell.titleLabel.text = row.title
-        cell.dateLabel.text = row.release
-        cell.genreLabel.text = "#\(row.genre)"
-        cell.scoreLabel.text = "\(row.rate)"
+        cell.dateLabel.text = row.releaseDate
+        cell.genreLabel.text = "#\(Genre.findGenre(id: row.genreID[0]))"
+        cell.scoreLabel.text = "\(row.voteAverage)"
         cell.overviewLabel.text = row.overview
         
-        let url = URL(string: "\(row.backdropImage)")!
+        let url = URL(string: "\(ImagePath.path + row.backdropPath)")!
         DispatchQueue.global().async {
             let data = try! Data(contentsOf: url)
             
@@ -95,9 +75,10 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(identifier: "CreditViewController") as? CreditViewController else { return }
-        vc.movieID = list[indexPath.row].id
-        vc.pickedMovie = list[indexPath.row]
-        vc.movieTitle = list[indexPath.row].title
+        let row = list.results[indexPath.row]// else { return }
+        vc.movieID = row.id
+        vc.pickedMovie = row
+        vc.movieTitle = row.title
         navigationController?.pushViewController(vc, animated: true)
     }
 }

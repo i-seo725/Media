@@ -20,10 +20,9 @@ class CreditViewController: UIViewController {
     @IBOutlet var mainPosterImageView: UIImageView!
     
     var movieID: Int?
-    var pickedMovie: Movie?
+    var pickedMovie: Result?
     var movieTitle: String?
-    var castList: [Cast] = []
-    var isExpand: Bool = false
+    var castList = Credit(crew: [], id: 0, cast: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,28 +65,17 @@ class CreditViewController: UIViewController {
         guard let id = movieID else { return }
         let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
         let url = "https://api.themoviedb.org/3/movie/\(id)/credits"
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200...600).responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                print(json)
-                for i in json["cast"].arrayValue {
-                    let name = i["name"].stringValue
-                    let character = i["character"].stringValue
-                    let image = i["profile_path"].stringValue
-                    self.castList.append(Cast(name: name, charactor: character, image: Cast.imageURL+image))
-                    self.castTableView.reloadData()
-                }
-                
-            case .failure(let error):
-                print(error)
-            }
+        
+        AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Credit.self) { response in
+            guard let value = response.value else { return }
+            self.castList = value
+            self.castTableView.reloadData()
         }
     }
     func setImage() {
         guard let movie = pickedMovie else { return }
-        guard let url1 = URL(string: movie.backdropImage) else { return }
-        guard let url2 = URL(string: movie.posterImage) else { return }
+        guard let url1 = URL(string: ImagePath.path + movie.backdropPath) else { return }
+        guard let url2 = URL(string: ImagePath.path + movie.posterPath) else { return }
         DispatchQueue.global().async {
             let data1 = try! Data(contentsOf: url1)
             let data2 = try! Data(contentsOf: url2)
@@ -99,19 +87,6 @@ class CreditViewController: UIViewController {
         
         
     }
-    
-    @objc func expandButtonTapped(content: UILabel, icon: UIButton ) {
-        if isExpand == false {
-            content.numberOfLines = 0
-            icon.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-            overviewTableView.rowHeight = UITableView.automaticDimension
-            isExpand.toggle()
-        } else {
-            content.numberOfLines = 4
-            icon.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-            isExpand.toggle()
-        }
-    }
 }
 
 extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
@@ -120,7 +95,7 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
         case overviewTableView:
             return 1
         case castTableView:
-            return castList.count
+            return castList.cast.count
         default: return 1
         }
     }
@@ -133,16 +108,18 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier) as? OverviewTableViewCell else { return UITableViewCell()}
             cell.contentsLabel.text = movie.overview
             cell.contentsLabel.numberOfLines = 0
-//            cell.expandButton.addTarget(self, action: #selector(expandButtonTapped), for: .touchUpInside)
+
             return cell
             
         case castTableView:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CastTableViewCell.identifier) as? CastTableViewCell else { return UITableViewCell() }
             
-            cell.nameLabel.text = castList[indexPath.row].name
-            cell.characterLabel.text = castList[indexPath.row].charactor
+            let row = castList.cast[indexPath.row]
             
-            guard let url = URL(string: Cast.imageURL+castList[indexPath.row].image) else {
+            cell.nameLabel.text = row.name
+            cell.characterLabel.text = row.character
+            
+            guard let url = URL(string: ImagePath.path + (row.profilePath ?? "")) else {
                 cell.profileImageView.backgroundColor = .systemGray4
                 return cell
             }
