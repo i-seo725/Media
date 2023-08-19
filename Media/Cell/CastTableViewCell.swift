@@ -17,7 +17,14 @@ class CastTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        profileImageView.layer.cornerRadius = 8
+        profileImageView.layer.shadowOpacity = 0.6
+        profileImageView.layer.shadowRadius = 1
+        
+        nameLabel.font = .boldSystemFont(ofSize: 15)
+        characterLabel.font = .systemFont(ofSize: 14)
+        characterLabel.textColor = .darkGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

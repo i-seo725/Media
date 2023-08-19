@@ -70,12 +70,13 @@ class CreditViewController: UIViewController {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                
+                print(json)
                 for i in json["cast"].arrayValue {
                     let name = i["name"].stringValue
-                    let character = i["chracter"].stringValue
+                    let character = i["character"].stringValue
                     let image = i["profile_path"].stringValue
                     self.castList.append(Cast(name: name, charactor: character, image: Cast.imageURL+image))
+                    self.castTableView.reloadData()
                 }
                 
             case .failure(let error):
