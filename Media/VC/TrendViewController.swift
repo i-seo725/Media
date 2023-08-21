@@ -56,6 +56,7 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
         let row = list.results[indexPath.row]
         cell.titleLabel.text = row.title
+        cell.originalTitleLabel.text = row.originalTitle
         cell.dateLabel.text = row.releaseDate
         cell.genreLabel.text = "#\(Genre.findGenre(id: row.genreID[0]))"
         cell.scoreLabel.text = "\(row.voteAverage)"

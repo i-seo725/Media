@@ -20,6 +20,7 @@ class TrendCollectionViewCell: UICollectionViewCell {
     @IBOutlet var rateLabel: UILabel!
     @IBOutlet var scoreLabel: UILabel!
     @IBOutlet var loadingView: UIActivityIndicatorView!
+    @IBOutlet var originalTitleLabel: UILabel!
     
     static let identifier = "TrendCollectionViewCell"
     override func awakeFromNib() {
@@ -34,6 +35,7 @@ class TrendCollectionViewCell: UICollectionViewCell {
         backView.layer.shadowOffset = .zero
         
         titleLabel.font = .systemFont(ofSize: 16)
+        originalTitleLabel.font = .systemFont(ofSize: 15)
         
         overviewLabel.font = .systemFont(ofSize: 14)
         overviewLabel.textColor = .darkGray

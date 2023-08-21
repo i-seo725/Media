@@ -12,40 +12,31 @@ import SwiftyJSON
 class CreditViewController: UIViewController {
 
     @IBOutlet var posterImage: UIImageView!
-    @IBOutlet var overviewLabel: UILabel!
-    @IBOutlet var castLabel: UILabel!
-    @IBOutlet var castTableView: UITableView!
-    @IBOutlet var overviewTableView: UITableView!
+    @IBOutlet var creditTableView: UITableView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var mainPosterImageView: UIImageView!
     
+//    var isExpand = false
     var movieID: Int?
     var pickedMovie: Result?
     var movieTitle: String?
     var castList = Credit(crew: [], id: 0, cast: [])
+    var recommendedMovie = Movie(totalPages: 0, totalResults: 0, page: 0, results: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        overviewTableView.rowHeight = UITableView.automaticDimension
         connectTableView()
         designView()
         setImage()
         callCast()
-//        overviewTableView.rowHeight = .
+        callRecommendation()
+
     }
     
     func designView() {
-        overviewLabel.text = "OverView"
-        overviewLabel.font = .boldSystemFont(ofSize: 14)
-        overviewLabel.textColor = .darkGray
-        
         mainPosterImageView.layer.shadowOffset = .zero
         mainPosterImageView.layer.shadowColor = UIColor.black.cgColor
         mainPosterImageView.layer.shadowOpacity = 0.5
-        
-        castLabel.text = "Cast"
-        castLabel.font = .boldSystemFont(ofSize: 14)
-        castLabel.textColor = .darkGray
         
         titleLabel.font = .boldSystemFont(ofSize: 16)
         titleLabel.textColor = .white
@@ -56,10 +47,8 @@ class CreditViewController: UIViewController {
         title = "출연/제작"
     }
     func connectTableView() {
-        castTableView.dataSource = self
-        castTableView.delegate = self
-        overviewTableView.dataSource = self
-        overviewTableView.delegate = self
+        creditTableView.dataSource = self
+        creditTableView.delegate = self
     }
     func callCast() {
         guard let id = movieID else { return }
@@ -69,7 +58,7 @@ class CreditViewController: UIViewController {
         AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Credit.self) { response in
             guard let value = response.value else { return }
             self.castList = value
-            self.castTableView.reloadData()
+            self.creditTableView.reloadData()
         }
     }
     func setImage() {
@@ -87,31 +76,58 @@ class CreditViewController: UIViewController {
         
         
     }
+    func callRecommendation() {
+        print("@@@@@@@@@@@@   콜 요청 함수 실행")
+        guard let id = movieID else { return }
+        print("@@@@@@@@@@@@   아이디 받아오기 성공")
+        let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
+        let url = "https://api.themoviedb.org/3/movie/\(id)/recommendations"
+        AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Movie.self) { response in
+            guard let value = response.value else { return }
+            self.recommendedMovie = value
+            print("@@@@@@@@@@@@", self.recommendedMovie.results.count)
+            self.creditTableView.reloadData() //reloadSections(IndexSet(integer: 2), with: .automatic)
+        }
+    }
 }
 
 extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch tableView {
-        case overviewTableView:
+        switch section {
+        case 0:
             return 1
-        case castTableView:
+        case 1:
             return castList.cast.count
-        default: return 1
+        case 2:
+            print(recommendedMovie.results.count)
+            return recommendedMovie.results.count
+        default: return 0
+        }
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0: return "Overview"
+        case 1: return "Cast"
+        case 2: return "Recommendation"
+        default: return nil
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let movie = pickedMovie else { return UITableViewCell() }
         
-        switch tableView {
-        case overviewTableView:
+        switch indexPath.section {
+        case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier) as? OverviewTableViewCell else { return UITableViewCell()}
             cell.contentsLabel.text = movie.overview
-            cell.contentsLabel.numberOfLines = 0
+            cell.selectionStyle = .none
 
             return cell
             
-        case castTableView:
+        case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CastTableViewCell.identifier) as? CastTableViewCell else { return UITableViewCell() }
             
             let row = castList.cast[indexPath.row]
@@ -124,27 +140,51 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell
             }
             DispatchQueue.global().async {
-                let data = try! Data(contentsOf: url)
+                guard let data = try? Data(contentsOf: url) else {
+                    DispatchQueue.main.async {
+                        cell.profileImageView.backgroundColor = .systemGray4
+                    }
+                    return
+                }
                 DispatchQueue.main.async {
                     cell.profileImageView.image = UIImage(data: data)
                 }
             }
+            cell.selectionStyle = .none
+            
             return cell
+            
+        case 2:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecommendationTableViewCell.identifier) as? RecommendationTableViewCell else { return UITableViewCell() }
+            let row = recommendedMovie.results[indexPath.row]
+            cell.titleLabel.text = row.title
+            cell.releaseLabel.text = row.releaseDate
+            
+            guard let backdropURL = URL(string: ImagePath.path + row.backdropPath), let posterURL = URL(string: ImagePath.path + row.posterPath) else {
+                cell.backgroundImageView.backgroundColor = .systemGray4
+                return cell
+            }
+            
+            DispatchQueue.global().async {
+                let backdropData = try! Data(contentsOf: backdropURL)
+                let posterData = try! Data(contentsOf: posterURL)
+                
+                DispatchQueue.main.async {
+                    cell.backgroundImageView.image = UIImage(data: backdropData)
+                    cell.posterImageView.image = UIImage(data: posterData)
+                }
+            }
+            return cell
+            
         default: return UITableViewCell()
         }
-//        if tableView == overviewTableView {
-//            print("실행 되나? 오버뷰테이블뷰")
-//            overviewCell.contentsLabel.text = "xx"//movie.overview
-//            overviewCell.contentsLabel.numberOfLines = 0
-//            return overviewCell
-//        } else if tableView == castTableView {
-//            castCell.nameLabel.text = "테스트"
-//            return castCell
-//        } else {
-//            return UITableViewCell()
-//        }
-       
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 2 {
+            return 100
+        } else {
+            return UITableView.automaticDimension
+        }
+    }
 }
