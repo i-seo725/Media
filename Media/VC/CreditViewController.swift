@@ -83,11 +83,12 @@ class CreditViewController: UIViewController {
         let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
         let url = "https://api.themoviedb.org/3/movie/\(id)/recommendations"
         AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Movie.self) { response in
-            guard let value = response.value else { return }
+            guard let value = response.value else {
+                print(url, response.error, response.value)
+                return }
             self.recommendedMovie = value
             print("@@@@@@@@@@@@", self.recommendedMovie.results.count)
-            self.creditTableView.reloadData() //reloadSections(IndexSet(integer: 2), with: .automatic)
-        }
+            self.creditTableView.reloadData()        }
     }
 }
 
