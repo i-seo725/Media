@@ -11,6 +11,8 @@ import SwiftyJSON
 
 class CreditViewController: UIViewController {
 
+    static let identifier = "CreditViewController"
+    
     @IBOutlet var posterImage: UIImageView!
     @IBOutlet var creditTableView: UITableView!
     @IBOutlet var titleLabel: UILabel!
@@ -30,7 +32,7 @@ class CreditViewController: UIViewController {
         setImage()
         callCast()
         callRecommendation()
-
+        creditTableView.rowHeight = UITableView.automaticDimension
     }
     
     func designView() {
