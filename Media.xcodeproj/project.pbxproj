@@ -173,9 +173,9 @@
 		F4E10ACE2A98E911001B46BE /* Swift */ = {
 			isa = PBXGroup;
 			children = (
+				F4E10AD92A98EB25001B46BE /* IntroLabelClass.swift */,
 				F4E10ACF2A98E958001B46BE /* imagePathEnum.swift */,
 				F41A4B832A8D047B00CDD95E /* struct */,
-				F4E10AD92A98EB25001B46BE /* IntroLabelClass.swift */,
 			);
 			path = Swift;
 			sourceTree = "<group>";

@@ -10,7 +10,7 @@ import Alamofire
 import SwiftyJSON
 
 class CreditViewController: UIViewController {
-
+    
     static let identifier = "CreditViewController"
     
     @IBOutlet var posterImage: UIImageView!
@@ -18,7 +18,7 @@ class CreditViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var mainPosterImageView: UIImageView!
     
-//    var isExpand = false
+    var isExpand = false
     var movieID: Int?
     var pickedMovie: Result?
     var movieTitle: String?
@@ -79,9 +79,7 @@ class CreditViewController: UIViewController {
         
     }
     func callRecommendation() {
-        print("@@@@@@@@@@@@   콜 요청 함수 실행")
         guard let id = movieID else { return }
-        print("@@@@@@@@@@@@   아이디 받아오기 성공")
         let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
         let url = "https://api.themoviedb.org/3/movie/\(id)/recommendations"
         AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Movie.self) { response in
@@ -89,9 +87,12 @@ class CreditViewController: UIViewController {
                 print(url, response.error, response.value)
                 return }
             self.recommendedMovie = value
-            print("@@@@@@@@@@@@", self.recommendedMovie.results.count)
             self.creditTableView.reloadData()        }
     }
+    
+    
+    
+    
 }
 
 extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
@@ -105,7 +106,6 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             return castList.cast.count
         case 2:
-            print(recommendedMovie.results.count)
             return recommendedMovie.results.count
         default: return 0
         }
@@ -122,12 +122,18 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let movie = pickedMovie else { return UITableViewCell() }
         
+        
         switch indexPath.section {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier) as? OverviewTableViewCell else { return UITableViewCell()}
+            
+            let buttonImage = isExpand ? "chevron.down" : "chevron.up"
             cell.contentsLabel.text = movie.overview
+            cell.contentsLabel.numberOfLines = isExpand ? 2 : 0
+            cell.expandButton.setImage(UIImage(systemName: buttonImage), for: .normal)
+            isExpand.toggle()
             cell.selectionStyle = .none
-
+            
             return cell
             
         case 1:
@@ -177,6 +183,8 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.posterImageView.image = UIImage(data: posterData)
                 }
             }
+            
+            cell.selectionStyle = .none
             return cell
             
         default: return UITableViewCell()
@@ -188,6 +196,13 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
             return 100
         } else {
             return UITableView.automaticDimension
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            tableView.reloadSections(IndexSet(0...0), with: .automatic)
+            
         }
     }
 }

@@ -49,13 +49,11 @@ extension IntroPageViewController: UIPageViewControllerDelegate, UIPageViewContr
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        print(list.count)
         return list.count
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         guard let first = viewControllers?.first, let index = list.firstIndex(of: first) else { return 0 }
-        print(index, first, #function)
         return index
     }
     

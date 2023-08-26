@@ -19,7 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         let isStarted = UserDefaults.standard.bool(forKey: "isStarted")
-        print(isStarted)
         
         switch isStarted {
         case true:
