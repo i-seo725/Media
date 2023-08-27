@@ -21,11 +21,11 @@ struct Movie: Codable {
 struct Result: Codable {
     let voteCount, id: Int
     let adult: Bool
-    let backdropPath: String
+    let backdropPath, posterPath: String?
     let genreID: [Int]
-    let title, posterPath, overview, releaseDate: String
+    let title, overview, releaseDate: String
     let popularity: Double
-    let mediaType: MediaType
+    let mediaType: MediaType?
     let originalTitle: String
     let video: Bool
     let originalLanguage: String

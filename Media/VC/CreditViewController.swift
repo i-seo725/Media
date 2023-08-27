@@ -53,20 +53,16 @@ class CreditViewController: UIViewController {
         creditTableView.delegate = self
     }
     func callCast() {
-        guard let id = movieID else { return }
-        let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
-        let url = "https://api.themoviedb.org/3/movie/\(id)/credits"
-        
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Credit.self) { response in
-            guard let value = response.value else { return }
-            self.castList = value
+        guard let movieID else { return }
+        NetworkManager.shared.callRequest(codable: Credit(crew: [], id: 0, cast: []), type: .credit, id: movieID) { data in
+            self.castList = data
             self.creditTableView.reloadData()
         }
     }
     func setImage() {
         guard let movie = pickedMovie else { return }
-        guard let url1 = URL(string: ImagePath.path + movie.backdropPath) else { return }
-        guard let url2 = URL(string: ImagePath.path + movie.posterPath) else { return }
+        guard let url1 = URL(string: ImagePath.path + movie.backdropPath!) else { return }
+        guard let url2 = URL(string: ImagePath.path + movie.posterPath!) else { return }
         DispatchQueue.global().async {
             let data1 = try! Data(contentsOf: url1)
             let data2 = try! Data(contentsOf: url2)
@@ -79,15 +75,13 @@ class CreditViewController: UIViewController {
         
     }
     func callRecommendation() {
-        guard let id = movieID else { return }
-        let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
-        let url = "https://api.themoviedb.org/3/movie/\(id)/recommendations"
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Movie.self) { response in
-            guard let value = response.value else {
-                print(url, response.error, response.value)
-                return }
-            self.recommendedMovie = value
-            self.creditTableView.reloadData()        }
+        guard let movieID else { return }
+              
+        NetworkManager.shared.callRequest(codable: Movie(totalPages: 0, totalResults: 0, page: 0, results: []), type: .recommend, id: movieID) { data in
+            self.recommendedMovie = data
+            self.creditTableView.reloadData()
+        }
+
     }
     
     
@@ -97,24 +91,28 @@ class CreditViewController: UIViewController {
 
 extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 1
         case 1:
-            return castList.cast.count
+            return 1
         case 2:
+            return castList.cast.count
+        case 3:
             return recommendedMovie.results.count
         default: return 0
         }
+        
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
-        case 0: return "Overview"
-        case 1: return "Cast"
-        case 2: return "Recommendation"
+        case 0: return "Videos"
+        case 1: return "Overview"
+        case 2: return "Cast"
+        case 3: return "Recommendation"
         default: return nil
         }
     }
@@ -125,6 +123,10 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch indexPath.section {
         case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: VideoTableViewCell.identifier) as? VideoTableViewCell else { return UITableViewCell() }
+            cell.selectionStyle = .none
+            return cell
+        case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier) as? OverviewTableViewCell else { return UITableViewCell()}
             
             let buttonImage = isExpand ? "chevron.down" : "chevron.up"
@@ -136,7 +138,7 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
             
             return cell
             
-        case 1:
+        case 2:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CastTableViewCell.identifier) as? CastTableViewCell else { return UITableViewCell() }
             
             let row = castList.cast[indexPath.row]
@@ -163,13 +165,13 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
             
             return cell
             
-        case 2:
+        case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RecommendationTableViewCell.identifier) as? RecommendationTableViewCell else { return UITableViewCell() }
             let row = recommendedMovie.results[indexPath.row]
             cell.titleLabel.text = row.title
             cell.releaseLabel.text = row.releaseDate
             
-            guard let backdropURL = URL(string: ImagePath.path + row.backdropPath), let posterURL = URL(string: ImagePath.path + row.posterPath) else {
+            guard let backdropURL = URL(string: ImagePath.path + row.backdropPath!), let posterURL = URL(string: ImagePath.path + row.posterPath!) else {
                 cell.backgroundImageView.backgroundColor = .systemGray4
                 return cell
             }
@@ -192,7 +194,7 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 2 {
+        if indexPath.section == 3 {
             return 100
         } else {
             return UITableView.automaticDimension
@@ -201,8 +203,13 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            tableView.reloadSections(IndexSet(0...0), with: .automatic)
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            guard let vc = sb.instantiateViewController(withIdentifier: SimilarViewController.identifier) as? SimilarViewController else { return }
+            vc.movieID = movieID
+            navigationController?.pushViewController(vc, animated: true)
             
+        } else if indexPath.section == 1 {
+            tableView.reloadSections(IndexSet(1...1), with: .automatic)
         }
     }
 }

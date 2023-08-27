@@ -34,15 +34,23 @@ class TrendViewController: UIViewController {
     }
     
     func callRequest() {
-        let url = "https://api.themoviedb.org/3/trending/movie/day?language=ko-KR"
-        let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
-        AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Movie.self) { response in
-            
-            guard let value = response.value else { return }
-            self.list = value
+        NetworkManager.shared.callRequest(codable: Movie(totalPages: 0, totalResults: 0, page: 0, results: []), type: .trend) { data in
+            self.list = data
             self.movieCollectionView.reloadData()
         }
+        
     }
+    
+//    func callRequest() {
+//        let url = "https://api.themoviedb.org/3/trending/movie/day?language=ko-KR"
+//        let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
+//        AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Movie.self) { response in
+//
+//            guard let value = response.value else { return }
+//            self.list = value
+//            self.movieCollectionView.reloadData()
+//        }
+//    }
 
 }
 
@@ -62,7 +70,7 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
         cell.scoreLabel.text = "\(row.voteAverage)"
         cell.overviewLabel.text = row.overview
         
-        let url = URL(string: "\(ImagePath.path + row.backdropPath)")!
+        let url = URL(string: "\(ImagePath.path + row.backdropPath!)")!
         DispatchQueue.global().async {
             let data = try! Data(contentsOf: url)
             

@@ -9,4 +9,5 @@ import Foundation
 
 enum ImagePath {
     static let path = "https://image.tmdb.org/t/p/original"
+    static let youtubePath = "youtube.com/watch?v="
 }
