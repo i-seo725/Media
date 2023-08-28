@@ -11,6 +11,7 @@
 		F40413382A90E09400871FEE /* GenreStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40413372A90E09400871FEE /* GenreStruct.swift */; };
 		F404133C2A90E66F00871FEE /* CastCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F404133B2A90E66F00871FEE /* CastCodable.swift */; };
 		F40413402A90E6E900871FEE /* movieStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = F404133F2A90E6E900871FEE /* movieStruct.swift */; };
+		F41250B52A9CDC3C00BB77E7 /* BaseNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41250B42A9CDC3C00BB77E7 /* BaseNetworkViewController.swift */; };
 		F41A4B402A87980800CDD95E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B3F2A87980800CDD95E /* AppDelegate.swift */; };
 		F41A4B422A87980800CDD95E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B412A87980800CDD95E /* SceneDelegate.swift */; };
 		F41A4B442A87980800CDD95E /* TrendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B432A87980800CDD95E /* TrendViewController.swift */; };
@@ -47,6 +48,7 @@
 		F40413372A90E09400871FEE /* GenreStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreStruct.swift; sourceTree = "<group>"; };
 		F404133B2A90E66F00871FEE /* CastCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCodable.swift; sourceTree = "<group>"; };
 		F404133F2A90E6E900871FEE /* movieStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = movieStruct.swift; sourceTree = "<group>"; };
+		F41250B42A9CDC3C00BB77E7 /* BaseNetworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNetworkViewController.swift; sourceTree = "<group>"; };
 		F41A4B3C2A87980800CDD95E /* Media.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Media.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41A4B3F2A87980800CDD95E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F41A4B412A87980800CDD95E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				F41A4B432A87980800CDD95E /* TrendViewController.swift */,
 				F41A4B532A879EA600CDD95E /* CreditViewController.swift */,
 				F497DB102A9A487E00817499 /* SimilarViewController.swift */,
+				F41250B42A9CDC3C00BB77E7 /* BaseNetworkViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				F41A4B442A87980800CDD95E /* TrendViewController.swift in Sources */,
 				F4E10AD02A98E958001B46BE /* imagePathEnum.swift in Sources */,
 				F41A4B402A87980800CDD95E /* AppDelegate.swift in Sources */,
+				F41250B52A9CDC3C00BB77E7 /* BaseNetworkViewController.swift in Sources */,
 				F497DB0F2A9A425F00817499 /* VideoTableViewCell.swift in Sources */,
 				F41A4B5E2A8914E600CDD95E /* CastTableViewCell.swift in Sources */,
 				F4E10ADA2A98EB25001B46BE /* IntroLabelClass.swift in Sources */,

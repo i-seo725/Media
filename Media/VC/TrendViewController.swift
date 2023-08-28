@@ -7,22 +7,31 @@
 
 import UIKit
 import Alamofire
-import SwiftyJSON
 
-
-class TrendViewController: UIViewController {
+class TrendViewController: BaseNetworkUIViewController {
     var list: Movie = Movie(totalPages: 0, totalResults: 0, page: 0, results: [])
+    let movieCollectionView = UICollectionView()
     
-    @IBOutlet var movieCollectionView: UICollectionView!
+//    @IBOutlet var movieCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
-        callRequest()
         layout()
         title = "오늘의 트렌드"
     }
 
+    override func configureView() {
+        super.configureView()
+        view.addSubview(movieCollectionView)
+    }
+    
+    override func setConstraints() {
+        movieCollectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
     func layout() {
         let layout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width - 20
@@ -40,17 +49,6 @@ class TrendViewController: UIViewController {
         }
         
     }
-    
-//    func callRequest() {
-//        let url = "https://api.themoviedb.org/3/trending/movie/day?language=ko-KR"
-//        let header: HTTPHeaders = ["Authorization": "Bearer \(APIKey.tmdb)"]
-//        AF.request(url, method: .get, headers: header).validate(statusCode: 200...500).responseDecodable(of: Movie.self) { response in
-//
-//            guard let value = response.value else { return }
-//            self.list = value
-//            self.movieCollectionView.reloadData()
-//        }
-//    }
 
 }
 
