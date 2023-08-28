@@ -22,8 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         switch isStarted {
         case true:
-            let sb = UIStoryboard(name: "Main", bundle: nil)
-            guard let vc = sb.instantiateViewController(withIdentifier: "TrendViewController") as? TrendViewController else { return }
+            let vc = TrendViewController()
             let nav = UINavigationController(rootViewController: vc)
             window?.rootViewController = nav
         case false:

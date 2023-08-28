@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class BaseNetworkUIViewController: UIViewController {
+class BaseViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,5 +21,4 @@ class BaseNetworkUIViewController: UIViewController {
     }
     
     func setConstraints() { }
-    
 }

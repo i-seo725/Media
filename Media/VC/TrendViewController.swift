@@ -8,17 +8,18 @@
 import UIKit
 import Alamofire
 
-class TrendViewController: BaseNetworkUIViewController {
-    var list: Movie = Movie(totalPages: 0, totalResults: 0, page: 0, results: [])
-    let movieCollectionView = UICollectionView()
+class TrendViewController: BaseViewController {
+    var list: Movie?
+    lazy var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
-//    @IBOutlet var movieCollectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
-        layout()
         title = "오늘의 트렌드"
+        callRequest()
+        movieCollectionView.register(TrendCollectionViewCell.self, forCellWithReuseIdentifier: "TrendCollectionViewCell")
+        
     }
 
     override func configureView() {
@@ -32,14 +33,14 @@ class TrendViewController: BaseNetworkUIViewController {
         }
     }
     
-    func layout() {
+    func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width - 20
         layout.itemSize = .init(width: width, height: width + 30)
         layout.minimumLineSpacing = 18
         layout.minimumInteritemSpacing = 18
         
-        movieCollectionView.collectionViewLayout = layout
+        return layout
     }
     
     func callRequest() {
@@ -54,12 +55,16 @@ class TrendViewController: BaseNetworkUIViewController {
 
 extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let list else { return 0 }
         return list.results.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendCollectionViewCell.identifier, for: indexPath) as? TrendCollectionViewCell else {
             return UICollectionViewCell() }
         
+//        guard let list else { return UICollectionViewCell() }
+        let list = self.list!
+        print(list, "ddddd")
         let row = list.results[indexPath.row]
         cell.titleLabel.text = row.title
         cell.originalTitleLabel.text = row.originalTitle
@@ -80,8 +85,10 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
         }
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(identifier: "CreditViewController") as? CreditViewController else { return }
+        guard let list else { return }
         let row = list.results[indexPath.row]// else { return }
         vc.movieID = row.id
         vc.pickedMovie = row
