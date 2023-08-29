@@ -14,6 +14,10 @@
 		F406C6F82A9E32D100054800 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F406C6F72A9E32D100054800 /* ProfileViewController.swift */; };
 		F406C6FB2A9E331600054800 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F406C6FA2A9E331600054800 /* BaseView.swift */; };
 		F406C6FD2A9E337E00054800 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F406C6FC2A9E337E00054800 /* ProfileView.swift */; };
+		F406C7002A9E390200054800 /* ProfileLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F406C6FF2A9E390200054800 /* ProfileLabel.swift */; };
+		F406C7032A9E3A4C00054800 /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F406C7022A9E3A4C00054800 /* ProfileButton.swift */; };
+		F406C7072A9E417800054800 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F406C7062A9E417800054800 /* EditViewController.swift */; };
+		F406C7092A9E41CA00054800 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F406C7082A9E41CA00054800 /* EditView.swift */; };
 		F41250B52A9CDC3C00BB77E7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41250B42A9CDC3C00BB77E7 /* BaseViewController.swift */; };
 		F41250B72A9CE11F00BB77E7 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41250B62A9CE11F00BB77E7 /* BaseCollectionViewCell.swift */; };
 		F41A4B402A87980800CDD95E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A4B3F2A87980800CDD95E /* AppDelegate.swift */; };
@@ -55,6 +59,10 @@
 		F406C6F72A9E32D100054800 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F406C6FA2A9E331600054800 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		F406C6FC2A9E337E00054800 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		F406C6FF2A9E390200054800 /* ProfileLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLabel.swift; sourceTree = "<group>"; };
+		F406C7022A9E3A4C00054800 /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
+		F406C7062A9E417800054800 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		F406C7082A9E41CA00054800 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		F41250B42A9CDC3C00BB77E7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		F41250B62A9CE11F00BB77E7 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		F41A4B3C2A87980800CDD95E /* Media.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Media.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,8 +133,37 @@
 			children = (
 				F406C6FA2A9E331600054800 /* BaseView.swift */,
 				F406C6FC2A9E337E00054800 /* ProfileView.swift */,
+				F406C7082A9E41CA00054800 /* EditView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		F406C6FE2A9E38DE00054800 /* CustomClass */ = {
+			isa = PBXGroup;
+			children = (
+				F406C6FF2A9E390200054800 /* ProfileLabel.swift */,
+				F406C7022A9E3A4C00054800 /* ProfileButton.swift */,
+			);
+			path = CustomClass;
+			sourceTree = "<group>";
+		};
+		F406C7042A9E412E00054800 /* Assignment0829 */ = {
+			isa = PBXGroup;
+			children = (
+				F406C7052A9E415B00054800 /* VC */,
+				F406C6F92A9E330600054800 /* View */,
+				F406C6FE2A9E38DE00054800 /* CustomClass */,
+			);
+			path = Assignment0829;
+			sourceTree = "<group>";
+		};
+		F406C7052A9E415B00054800 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				F406C6F72A9E32D100054800 /* ProfileViewController.swift */,
+				F406C7062A9E417800054800 /* EditViewController.swift */,
+			);
+			path = VC;
 			sourceTree = "<group>";
 		};
 		F41A4B332A87980800CDD95E = {
@@ -148,7 +185,7 @@
 		F41A4B3E2A87980800CDD95E /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				F406C6F92A9E330600054800 /* View */,
+				F406C7042A9E412E00054800 /* Assignment0829 */,
 				F4E10ACE2A98E911001B46BE /* Swift */,
 				F4E10ACD2A98E8F9001B46BE /* PageScroll */,
 				F41A4B5C2A8914CA00CDD95E /* Cell */,
@@ -172,7 +209,6 @@
 				F41A4B532A879EA600CDD95E /* CreditViewController.swift */,
 				F497DB102A9A487E00817499 /* SimilarViewController.swift */,
 				F41250B42A9CDC3C00BB77E7 /* BaseViewController.swift */,
-				F406C6F72A9E32D100054800 /* ProfileViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -317,6 +353,7 @@
 				F4E10ACC2A98E8EC001B46BE /* IntroPageViewController.swift in Sources */,
 				F41250B72A9CE11F00BB77E7 /* BaseCollectionViewCell.swift in Sources */,
 				F41A4B622A8BA54200CDD95E /* OverviewTableViewCell.swift in Sources */,
+				F406C7032A9E3A4C00054800 /* ProfileButton.swift in Sources */,
 				F41A4B442A87980800CDD95E /* TrendViewController.swift in Sources */,
 				F4E10AD02A98E958001B46BE /* imagePathEnum.swift in Sources */,
 				F41A4B402A87980800CDD95E /* AppDelegate.swift in Sources */,
@@ -324,6 +361,7 @@
 				F497DB0F2A9A425F00817499 /* VideoTableViewCell.swift in Sources */,
 				F41A4B5E2A8914E600CDD95E /* CastTableViewCell.swift in Sources */,
 				F4E10ADA2A98EB25001B46BE /* IntroLabelClass.swift in Sources */,
+				F406C7092A9E41CA00054800 /* EditView.swift in Sources */,
 				F41A4B5A2A89102200CDD95E /* TrendCollectionViewCell.swift in Sources */,
 				F47E56C02A9B936700F55C37 /* VideoCodable.swift in Sources */,
 				F497DB0B2A999CE800817499 /* URL+Extenstion.swift in Sources */,
@@ -337,6 +375,7 @@
 				F4D1B4EF2A93AD9E006A0B57 /* RecommendationTableViewCell.swift in Sources */,
 				F4E10AD42A98E9B2001B46BE /* SecondViewController.swift in Sources */,
 				F40413362A90E04700871FEE /* MovieCodable.swift in Sources */,
+				F406C7072A9E417800054800 /* EditViewController.swift in Sources */,
 				F497DB112A9A487E00817499 /* SimilarViewController.swift in Sources */,
 				F41A4B542A879EA600CDD95E /* CreditViewController.swift in Sources */,
 				F41A4B852A8D04A600CDD95E /* castStruct.swift in Sources */,
@@ -344,6 +383,7 @@
 				F41A4B582A879EF500CDD95E /* APIKey.swift in Sources */,
 				F406C6FB2A9E331600054800 /* BaseView.swift in Sources */,
 				F497DB0D2A999DB300817499 /* Endpoint.swift in Sources */,
+				F406C7002A9E390200054800 /* ProfileLabel.swift in Sources */,
 				F404133C2A90E66F00871FEE /* CastCodable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

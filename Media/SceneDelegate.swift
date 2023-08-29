@@ -22,9 +22,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         switch isStarted {
         case true:
-            let vc = TrendViewController()
-            let nav = UINavigationController(rootViewController: vc)
-            window?.rootViewController = nav
+//            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "TrendViewController")
+//            let nav = UINavigationController(rootViewController: vc)
+//            window?.rootViewController = nav
+            window?.rootViewController = UINavigationController(rootViewController: ProfileViewController())
         case false:
             let vc = IntroPageViewController()
             window?.rootViewController = vc
