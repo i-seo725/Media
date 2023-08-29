@@ -8,40 +8,48 @@
 import UIKit
 import Alamofire
 
-class TrendViewController: BaseViewController {
+class TrendViewController: UIViewController {
     var list: Movie?
-    lazy var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+//    lazy var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    
+    @IBOutlet var movieCollectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        movieCollectionView.delegate = self
-        movieCollectionView.dataSource = self
+        self.movieCollectionView.delegate = self
+        self.movieCollectionView.dataSource = self
         title = "오늘의 트렌드"
         callRequest()
-        movieCollectionView.register(TrendCollectionViewCell.self, forCellWithReuseIdentifier: "TrendCollectionViewCell")
+    
+        //스토리보드 기반으로 연결하기
+//        movieCollectionView.register(TrendCollectionViewCell.self, forCellWithReuseIdentifier: "TrendCollectionViewCell")
+        
+//        movieCollectionView.register(UINib(nibName: TrendCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: TrendCollectionViewCell.identifier)
+      
         
     }
 
-    override func configureView() {
-        super.configureView()
-        view.addSubview(movieCollectionView)
-    }
+//    override func configureView() {
+//        super.configureView()
+//        view.addSubview(movieCollectionView)
+//        movieCollectionView.addSubview(TrendCollectionViewCell())
+//    }
     
-    override func setConstraints() {
-        movieCollectionView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
+//    override func setConstraints() {
+//        movieCollectionView.snp.makeConstraints { make in
+//            make.edges.equalTo(view.safeAreaLayoutGuide)
+//        }
+//    }
     
-    func layout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        let width = UIScreen.main.bounds.width - 20
-        layout.itemSize = .init(width: width, height: width + 30)
-        layout.minimumLineSpacing = 18
-        layout.minimumInteritemSpacing = 18
-        
-        return layout
-    }
+//    func layout() -> UICollectionViewFlowLayout {
+//        let layout = UICollectionViewFlowLayout()
+//        let width = UIScreen.main.bounds.width - 20
+//        layout.itemSize = .init(width: width, height: width + 30)
+//        layout.minimumLineSpacing = 18
+//        layout.minimumInteritemSpacing = 18
+//
+//        return layout
+//    }
     
     func callRequest() {
         NetworkManager.shared.callRequest(codable: Movie(totalPages: 0, totalResults: 0, page: 0, results: []), type: .trend) { data in
@@ -62,10 +70,10 @@ extension TrendViewController: UICollectionViewDelegate, UICollectionViewDataSou
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TrendCollectionViewCell.identifier, for: indexPath) as? TrendCollectionViewCell else {
             return UICollectionViewCell() }
         
-//        guard let list else { return UICollectionViewCell() }
-        let list = self.list!
-        print(list, "ddddd")
+        guard let list else { return UICollectionViewCell() }
+        
         let row = list.results[indexPath.row]
+        print("@@@@@@@", cell)//.titleLabel)
         cell.titleLabel.text = row.title
         cell.originalTitleLabel.text = row.originalTitle
         cell.dateLabel.text = row.releaseDate
