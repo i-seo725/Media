@@ -9,6 +9,11 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+enum Media {
+    case movie, tv
+}
+
+
 class CreditViewController: UIViewController {
     
     static let identifier = "CreditViewController"
@@ -19,11 +24,15 @@ class CreditViewController: UIViewController {
     @IBOutlet var mainPosterImageView: UIImageView!
     
     var isExpand = false
+    var media: Media?
     var movieID: Int?
+    var tvID: Int?
     var pickedMovie: Result?
-    var movieTitle: String?
+    var pickedTV: TVResult?
+
     var castList = Credit(crew: [], id: 0, cast: [])
     var recommendedMovie = Movie(totalPages: 0, totalResults: 0, page: 0, results: [])
+    var recommendedTV = TVShow(page: 0, results: [], totalPages: 0, totalResults: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +40,7 @@ class CreditViewController: UIViewController {
         designView()
         setImage()
         callCast()
-        callRecommendation()
+        callMRecommendation()
         creditTableView.rowHeight = UITableView.automaticDimension
     }
     
@@ -42,47 +51,109 @@ class CreditViewController: UIViewController {
         
         titleLabel.font = .boldSystemFont(ofSize: 16)
         titleLabel.textColor = .white
-        if let movieTitle {
-            titleLabel.text = movieTitle
-        }
         
+        guard let media else { return }
+        switch media {
+        case .movie:
+            guard let pickedMovie else { return }
+            titleLabel.text = pickedMovie.title
+        case .tv:
+            guard let pickedTV else { return }
+            titleLabel.text = pickedTV.name
+        }
         title = "출연/제작"
     }
     func connectTableView() {
         creditTableView.dataSource = self
         creditTableView.delegate = self
     }
+    
     func callCast() {
-        guard let movieID else { return }
-        NetworkManager.shared.callRequest(codable: Credit(crew: [], id: 0, cast: []), type: .credit, id: movieID) { data in
-            self.castList = data
-            self.creditTableView.reloadData()
-        }
-    }
-    func setImage() {
-        guard let movie = pickedMovie else { return }
-        guard let url1 = URL(string: ImagePath.path + movie.backdropPath!) else { return }
-        guard let url2 = URL(string: ImagePath.path + movie.posterPath!) else { return }
-        DispatchQueue.global().async {
-            let data1 = try! Data(contentsOf: url1)
-            let data2 = try! Data(contentsOf: url2)
-            DispatchQueue.main.async {
-                self.posterImage.image = UIImage(data: data1)
-                self.mainPosterImageView.image = UIImage(data: data2)
+        guard let media else { return }
+        switch media {
+        case .movie:
+            guard let movieID else { return }
+            NetworkManager.shared.callRequest(codable: Credit(crew: [], id: 0, cast: []), type: .credit, id: movieID) { data in
+                self.castList = data
+                self.creditTableView.reloadData()
+            }
+        case .tv:
+            guard let tvID else { return }
+            NetworkManager.shared.callRequest(codable: Credit(crew: [], id: 0, cast: []), type: .tvCredit, id: tvID) { data in
+                self.castList = data
+                self.creditTableView.reloadData()
             }
         }
-        
-        
     }
-    func callRecommendation() {
-        guard let movieID else { return }
-              
-        NetworkManager.shared.callRequest(codable: Movie(totalPages: 0, totalResults: 0, page: 0, results: []), type: .recommend, id: movieID) { data in
-            self.recommendedMovie = data
-            self.creditTableView.reloadData()
+    func callMRecommendation() {
+        guard let media else { return }
+        switch media {
+        case .movie:
+            guard let movieID else { return }
+            NetworkManager.shared.callRequest(codable: Movie(totalPages: 0, totalResults: 0, page: 0, results: []), type: .recommend, id: movieID) { data in
+                self.recommendedMovie = data
+                self.creditTableView.reloadData()
+            }
+        case .tv:
+            guard let tvID else { return }
+            NetworkManager.shared.callRequest(codable: TVShow(page: 0, results: [], totalPages: 0, totalResults: 0), type: .tvRecommend, id: tvID) { data in
+                self.recommendedTV = data
+                self.creditTableView.reloadData()
+            }
         }
-
     }
+    
+    func setImage() {
+        guard let media else { return }
+        switch media {
+        case .movie:
+            guard let pickedMovie, let backdrop = pickedMovie.backdropPath, let poster = pickedMovie.posterPath else {
+                posterImage.backgroundColor = .gray
+                mainPosterImageView.backgroundColor = .gray
+                return
+            }
+            guard let backdropURL = URL(string: ImagePath.path + backdrop), let posterURL = URL(string: ImagePath.path + poster) else {
+                posterImage.backgroundColor = .gray
+                mainPosterImageView.backgroundColor = .gray
+                return
+            }
+            
+            DispatchQueue.global().async {
+                let backdropData = try! Data(contentsOf: backdropURL)
+                let posterData = try! Data(contentsOf: posterURL)
+                
+                DispatchQueue.main.async {
+                    self.posterImage.image = UIImage(data: backdropData)
+                    self.mainPosterImageView.image = UIImage(data: posterData)
+                }
+            }
+            
+            
+        case .tv:
+            guard let pickedTV, let backdrop = pickedTV.backdropPath, let poster = pickedTV.posterPath else {
+                posterImage.backgroundColor = .gray
+                mainPosterImageView.backgroundColor = .gray
+                return
+            }
+            
+            guard let backdropURL = URL(string: ImagePath.path + backdrop), let posterURL = URL(string: ImagePath.path + poster) else {
+                posterImage.backgroundColor = .gray
+                mainPosterImageView.backgroundColor = .gray
+                return
+            }
+            
+            DispatchQueue.global().async {
+                let backdropData = try! Data(contentsOf: backdropURL)
+                let posterData = try! Data(contentsOf: posterURL)
+                
+                DispatchQueue.main.async {
+                    self.posterImage.image = UIImage(data: backdropData)
+                    self.mainPosterImageView.image = UIImage(data: posterData)
+                }
+            }
+        }
+    }
+    
     
     
     
@@ -102,7 +173,13 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             return castList.cast.count
         case 3:
-            return recommendedMovie.results.count
+            guard let media else { return 0 }
+            switch media {
+            case .movie:
+                return recommendedMovie.results.count
+            case .tv:
+                return recommendedTV.results.count
+            }
         default: return 0
         }
         
@@ -118,8 +195,6 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let movie = pickedMovie else { return UITableViewCell() }
-        
         
         switch indexPath.section {
         case 0:
@@ -128,14 +203,21 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         case 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OverviewTableViewCell.identifier) as? OverviewTableViewCell else { return UITableViewCell()}
-            
             let buttonImage = isExpand ? "chevron.down" : "chevron.up"
-            cell.contentsLabel.text = movie.overview
             cell.contentsLabel.numberOfLines = isExpand ? 2 : 0
             cell.expandButton.setImage(UIImage(systemName: buttonImage), for: .normal)
             isExpand.toggle()
             cell.selectionStyle = .none
             
+            guard let media else { return UITableViewCell() }
+            switch media {
+            case .movie:
+                guard let movie = pickedMovie else { return cell }
+                cell.contentsLabel.text = movie.overview
+            case .tv:
+                guard let tv = pickedTV else { return cell }
+                cell.contentsLabel.text = tv.overview
+            }
             return cell
             
         case 2:
@@ -166,28 +248,58 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case 3:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecommendationTableViewCell.identifier) as? RecommendationTableViewCell else { return UITableViewCell() }
-            let row = recommendedMovie.results[indexPath.row]
-            cell.titleLabel.text = row.title
-            cell.releaseLabel.text = row.releaseDate
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecommendationTableViewCell.identifier) as? RecommendationTableViewCell, let media else { return UITableViewCell() }
             
-            guard let backdropURL = URL(string: ImagePath.path + row.backdropPath!), let posterURL = URL(string: ImagePath.path + row.posterPath!) else {
-                cell.backgroundImageView.backgroundColor = .systemGray4
+            switch media {
+            case .movie:
+                let row = recommendedMovie.results[indexPath.row]
+                cell.titleLabel.text = row.title
+                cell.releaseLabel.text = row.releaseDate
+                
+                if let backdropPath = row.backdropPath, let posterPath = row.posterPath {
+                    guard let backdropURL = URL(string: ImagePath.path + backdropPath), let posterURL = URL(string: ImagePath.path + posterPath) else {
+                        cell.backgroundImageView.backgroundColor = .systemGray4
+                        return cell
+                    }
+                    
+                    DispatchQueue.global().async {
+                        let backdropData = try! Data(contentsOf: backdropURL)
+                        let posterData = try! Data(contentsOf: posterURL)
+                        
+                        DispatchQueue.main.async {
+                            cell.backgroundImageView.image = UIImage(data: backdropData)
+                            cell.posterImageView.image = UIImage(data: posterData)
+                        }
+                    }
+                }
+                cell.selectionStyle = .none
+                return cell
+            case .tv:
+                let row = recommendedTV.results[indexPath.row]
+                cell.titleLabel.text = row.name
+                cell.releaseLabel.text = row.firstAirDate
+                
+                if let backdropPath = row.backdropPath, let posterPath = row.posterPath {
+                    guard let backdropURL = URL(string: ImagePath.path + backdropPath), let posterURL = URL(string: ImagePath.path + posterPath) else {
+                        cell.backgroundImageView.backgroundColor = .systemGray4
+                        return cell
+                    }
+                    
+                    DispatchQueue.global().async {
+                        let backdropData = try! Data(contentsOf: backdropURL)
+                        let posterData = try! Data(contentsOf: posterURL)
+                        
+                        DispatchQueue.main.async {
+                            cell.backgroundImageView.image = UIImage(data: backdropData)
+                            cell.posterImageView.image = UIImage(data: posterData)
+                        }
+                    }
+                }
+                cell.selectionStyle = .none
                 return cell
             }
             
-            DispatchQueue.global().async {
-                let backdropData = try! Data(contentsOf: backdropURL)
-                let posterData = try! Data(contentsOf: posterURL)
-                
-                DispatchQueue.main.async {
-                    cell.backgroundImageView.image = UIImage(data: backdropData)
-                    cell.posterImageView.image = UIImage(data: posterData)
-                }
-            }
             
-            cell.selectionStyle = .none
-            return cell
             
         default: return UITableViewCell()
         }
@@ -201,15 +313,15 @@ extension CreditViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            let sb = UIStoryboard(name: "Main", bundle: nil)
-            guard let vc = sb.instantiateViewController(withIdentifier: SimilarViewController.identifier) as? SimilarViewController else { return }
-            vc.movieID = movieID
-            navigationController?.pushViewController(vc, animated: true)
-            
-        } else if indexPath.section == 1 {
-            tableView.reloadSections(IndexSet(1...1), with: .automatic)
-        }
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if indexPath.section == 0 {
+//            let sb = UIStoryboard(name: "Main", bundle: nil)
+//            guard let vc = sb.instantiateViewController(withIdentifier: SimilarViewController.identifier) as? SimilarViewController else { return }
+//            vc.movieID = movieID
+//            navigationController?.pushViewController(vc, animated: true)
+//
+//        } else if indexPath.section == 1 {
+//            tableView.reloadSections(IndexSet(1...1), with: .automatic)
+//        }
+//    }
 }

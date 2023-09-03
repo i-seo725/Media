@@ -43,6 +43,8 @@
 		F497DB0F2A9A425F00817499 /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F497DB0E2A9A425F00817499 /* VideoTableViewCell.swift */; };
 		F497DB112A9A487E00817499 /* SimilarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F497DB102A9A487E00817499 /* SimilarViewController.swift */; };
 		F4D1B4EF2A93AD9E006A0B57 /* RecommendationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D1B4EE2A93AD9E006A0B57 /* RecommendationTableViewCell.swift */; };
+		F4DF215C2AA42DD3009D1250 /* TVCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF215B2AA42DD3009D1250 /* TVCollectionViewCell.swift */; };
+		F4DF215E2AA46509009D1250 /* TVShowCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF215D2AA46509009D1250 /* TVShowCodable.swift */; };
 		F4E10ACC2A98E8EC001B46BE /* IntroPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E10ACB2A98E8EC001B46BE /* IntroPageViewController.swift */; };
 		F4E10AD02A98E958001B46BE /* imagePathEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E10ACF2A98E958001B46BE /* imagePathEnum.swift */; };
 		F4E10AD22A98E9AC001B46BE /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E10AD12A98E9AC001B46BE /* FirstViewController.swift */; };
@@ -78,16 +80,18 @@
 		F41A4B572A879EF500CDD95E /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		F41A4B592A89102200CDD95E /* TrendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendCollectionViewCell.swift; sourceTree = "<group>"; };
 		F41A4B5D2A8914E600CDD95E /* CastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastTableViewCell.swift; sourceTree = "<group>"; };
-		F41A4B612A8BA54200CDD95E /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OverviewTableViewCell.swift; path = Media/OverviewTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F41A4B612A8BA54200CDD95E /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OverviewTableViewCell.swift; path = Media/Cell/Credit/OverviewTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F41A4B842A8D04A600CDD95E /* castStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = castStruct.swift; sourceTree = "<group>"; };
-		F47E56BD2A9B908600F55C37 /* SimilarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F47E56BD2A9B908600F55C37 /* SimilarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SimilarTableViewCell.swift; path = Media/Cell/Similar/SimilarTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F47E56BF2A9B936700F55C37 /* VideoCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCodable.swift; sourceTree = "<group>"; };
 		F497DB072A999C8E00817499 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		F497DB0A2A999CE800817499 /* URL+Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extenstion.swift"; sourceTree = "<group>"; };
 		F497DB0C2A999DB300817499 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
-		F497DB0E2A9A425F00817499 /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VideoTableViewCell.swift; path = Media/VideoTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F497DB0E2A9A425F00817499 /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VideoTableViewCell.swift; path = Media/Cell/Similar/VideoTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		F497DB102A9A487E00817499 /* SimilarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SimilarViewController.swift; path = Media/VC/SimilarViewController.swift; sourceTree = SOURCE_ROOT; };
-		F4D1B4EE2A93AD9E006A0B57 /* RecommendationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F4D1B4EE2A93AD9E006A0B57 /* RecommendationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecommendationTableViewCell.swift; path = Media/Cell/Credit/RecommendationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		F4DF215B2AA42DD3009D1250 /* TVCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCollectionViewCell.swift; sourceTree = "<group>"; };
+		F4DF215D2AA46509009D1250 /* TVShowCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCodable.swift; sourceTree = "<group>"; };
 		F4E10ACB2A98E8EC001B46BE /* IntroPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroPageViewController.swift; sourceTree = "<group>"; };
 		F4E10ACF2A98E958001B46BE /* imagePathEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = imagePathEnum.swift; path = struct/imagePathEnum.swift; sourceTree = "<group>"; };
 		F4E10AD12A98E9AC001B46BE /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 				F40413352A90E04700871FEE /* MovieCodable.swift */,
 				F404133B2A90E66F00871FEE /* CastCodable.swift */,
 				F47E56BF2A9B936700F55C37 /* VideoCodable.swift */,
+				F4DF215D2AA46509009D1250 /* TVShowCodable.swift */,
 			);
 			path = Codable;
 			sourceTree = "<group>";
@@ -216,12 +221,9 @@
 		F41A4B5C2A8914CA00CDD95E /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				F47E56BD2A9B908600F55C37 /* SimilarTableViewCell.swift */,
-				F497DB0E2A9A425F00817499 /* VideoTableViewCell.swift */,
-				F4D1B4EE2A93AD9E006A0B57 /* RecommendationTableViewCell.swift */,
-				F41A4B612A8BA54200CDD95E /* OverviewTableViewCell.swift */,
-				F41A4B592A89102200CDD95E /* TrendCollectionViewCell.swift */,
-				F41A4B5D2A8914E600CDD95E /* CastTableViewCell.swift */,
+				F4DF215A2AA42DB9009D1250 /* Trend */,
+				F4DF21592AA42DA5009D1250 /* Similar */,
+				F4DF21582AA42D59009D1250 /* Credit */,
 				F41250B62A9CE11F00BB77E7 /* BaseCollectionViewCell.swift */,
 			);
 			path = Cell;
@@ -245,6 +247,34 @@
 				F497DB072A999C8E00817499 /* NetworkManager.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		F4DF21582AA42D59009D1250 /* Credit */ = {
+			isa = PBXGroup;
+			children = (
+				F41A4B5D2A8914E600CDD95E /* CastTableViewCell.swift */,
+				F41A4B612A8BA54200CDD95E /* OverviewTableViewCell.swift */,
+				F4D1B4EE2A93AD9E006A0B57 /* RecommendationTableViewCell.swift */,
+			);
+			path = Credit;
+			sourceTree = "<group>";
+		};
+		F4DF21592AA42DA5009D1250 /* Similar */ = {
+			isa = PBXGroup;
+			children = (
+				F47E56BD2A9B908600F55C37 /* SimilarTableViewCell.swift */,
+				F497DB0E2A9A425F00817499 /* VideoTableViewCell.swift */,
+			);
+			path = Similar;
+			sourceTree = "<group>";
+		};
+		F4DF215A2AA42DB9009D1250 /* Trend */ = {
+			isa = PBXGroup;
+			children = (
+				F41A4B592A89102200CDD95E /* TrendCollectionViewCell.swift */,
+				F4DF215B2AA42DD3009D1250 /* TVCollectionViewCell.swift */,
+			);
+			path = Trend;
 			sourceTree = "<group>";
 		};
 		F4E10ACD2A98E8F9001B46BE /* PageScroll */ = {
@@ -370,8 +400,10 @@
 				F41A4B422A87980800CDD95E /* SceneDelegate.swift in Sources */,
 				F4E10AD22A98E9AC001B46BE /* FirstViewController.swift in Sources */,
 				F40413382A90E09400871FEE /* GenreStruct.swift in Sources */,
+				F4DF215E2AA46509009D1250 /* TVShowCodable.swift in Sources */,
 				F406C6FD2A9E337E00054800 /* ProfileView.swift in Sources */,
 				F497DB082A999C8E00817499 /* NetworkManager.swift in Sources */,
+				F4DF215C2AA42DD3009D1250 /* TVCollectionViewCell.swift in Sources */,
 				F4D1B4EF2A93AD9E006A0B57 /* RecommendationTableViewCell.swift in Sources */,
 				F4E10AD42A98E9B2001B46BE /* SecondViewController.swift in Sources */,
 				F40413362A90E04700871FEE /* MovieCodable.swift in Sources */,

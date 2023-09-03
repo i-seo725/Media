@@ -13,6 +13,11 @@ enum Endpoint {
     case recommend
     case similar
     case video
+    case tv
+    case person
+    case tvCredit
+    case tvRecommend
+    case personCredit
     
     func requestURL(type: Endpoint, id: Int? = nil) -> String {
         let idNum = id ?? 1
@@ -27,6 +32,17 @@ enum Endpoint {
                 return URL.makeURL("movie/\(idNum)/similar?language=ko-KR")
             case .video:
                 return URL.makeURL("movie/\(idNum)/videos")
+            case .tv:
+                return URL.makeURL("trending/tv/day?language=ko-KR")
+            case .person:
+                return URL.makeURL("trending/person/day?language=ko-KR")
+            case .tvCredit:
+                return URL.makeURL("tv/\(idNum)/credits")
+            case .tvRecommend:
+                return URL.makeURL("tv/\(idNum)/recommendations")
+            case .personCredit:
+                return URL.makeURL("person/\(idNum)/credits")
+                
             }
         }
     
